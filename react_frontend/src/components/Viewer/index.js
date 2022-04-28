@@ -53,16 +53,42 @@ const LBDviewer = ({ parentNode }) => {
     setSelection(prev => filtered)
   }, [selectedElements])
 
+  function SelectFormComponent() {
+    let MyComponent
+    switch (result.type) {
+      case "Window":
+        MyComponent = MyWindowForm
+        break;
+    
+      default:
+        break;
+    }
+    return MyComponent
+  }
+
+
   async function onSelect(sel) {
     setSelectedElements(prev => [])
     for (const s of sel) {
       console.log('s', s)
       const concept = await project.getConceptByIdentifier(s, dataset, model)
-      //console.log('concept', concept)
-      const query = 'Select * where {
-        <${identifier}> ?p ?o .
+      console.log('concept', concept)
+      const graphReferences = concept.references.filter(item => {
+        return item.identifier.startsWith("http")
+      })
+      for (const ref of graphReferences) {
+        const query = `Select * where {
+          <${ref.identifier}> a ?type ;
+           ?prop ?value .
+        }
+        `
+        console.log('query', query)
+        const results = await project.directQuery(query, [ref.distribution])
+        console.log(results)
+
+        //check ?type of results and choose Form Component based on this type
+        //
       }
-      '
 
       if (concept) {
         setSelectedElements(prev => [...prev, concept])
@@ -75,6 +101,7 @@ const LBDviewer = ({ parentNode }) => {
     <div>
       {model.length > 0 ? (
         <div>
+          {SelectFormComponent(results)}
         <Viewer
           height={550}
           models={[model]}
