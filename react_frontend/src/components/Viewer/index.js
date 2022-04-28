@@ -12,6 +12,7 @@ const LBDviewer = ({ parentNode }) => {
   const [dataset, setDataset] = useState("")
   const [selectedElements, setSelectedElements] = useRecoilState(s)
   const [selection, setSelection] = useState([])
+  const [results, setResults] = useState([])
   const project = useRecoilValue(p)
   const datasets = useRecoilValue(d)
 
@@ -55,7 +56,7 @@ const LBDviewer = ({ parentNode }) => {
 
   function SelectFormComponent() {
     let MyComponent
-    switch (result.type) {
+    switch (results.type) {
       case "Window":
         MyComponent = MyWindowForm
         break;
@@ -84,6 +85,7 @@ const LBDviewer = ({ parentNode }) => {
         `
         console.log('query', query)
         const results = await project.directQuery(query, [ref.distribution])
+        setResults(results)
         console.log(results)
 
         //check ?type of results and choose Form Component based on this type
