@@ -58,11 +58,16 @@ const LBDviewer = ({ parentNode }) => {
     for (const s of sel) {
       console.log('s', s)
       const concept = await project.getConceptByIdentifier(s, dataset, model)
-      console.log('concept', concept)
+      //console.log('concept', concept)
+      const query = 'Select * where {
+        <${identifier}> ?p ?o .
+      }
+      '
+
       if (concept) {
         setSelectedElements(prev => [...prev, concept])
-      }
-    }
+      }}
+    
     setSelection(sel)
   }
 

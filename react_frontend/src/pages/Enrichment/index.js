@@ -24,6 +24,7 @@ const Enricher = () => {
   const [datasets, setDatasets] = useState([])
   const [mainDataset, setMainDataset] = useState()
   const [error, setError] = useState("")
+  const [valueOfDuration, setValueOfDuration] = useState(0)
 
   useEffect(() => {
     getAllDatasets()
@@ -79,7 +80,7 @@ const Enricher = () => {
         const damageAlias = mainDataset.url + "#damage_" + v4()
 
         const query = `INSERT DATA {
-            <${damagedItemAlias}> <https://w3id.org/dot#hasDamage> <${damageAlias}> .
+            <${damagedItemAlias}> <https://myontology.com/definitions/hasLifeDuration> "${valueOfDuration}" .
           }`
 
         // add the enrichment to the dataset
