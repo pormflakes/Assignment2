@@ -10,7 +10,7 @@ export default function BasicTabs(props) {
 
   return (
  
-      <Viewer />
+      <Viewer getClickResult={props.getClickResult} />
   );
 }
 

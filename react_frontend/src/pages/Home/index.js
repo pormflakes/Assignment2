@@ -4,7 +4,7 @@ import Model from "./model.js";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-
+import SelectedItemHolder from "../../components/SelectedItemHolder/index.js";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -22,6 +22,7 @@ function TabPanel(props) {
   );
 }
 
+
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
@@ -31,11 +32,19 @@ function a11yProps(index) {
 
 const Home = () => {
   const [value, setValue] = React.useState(0);
+  const [selectedItem, setSelectedItem] = React.useState();
   const tabStyle = { height: 800 };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  function getClickResult(result) {
+    if(result.results.bindings[1].value.value){
+      console.log(result.results.bindings[1].value.value)
+      setSelectedItem(result.results.bindings[1].value.value)
+    }
+  }
 
   return (
     <Grid
@@ -58,7 +67,7 @@ const Home = () => {
             </Tabs>
           </Box>
           <TabPanel id="tab-box" style={tabStyle} value={value} index={0}>
-            1{" "}
+          <SelectedItemHolder selectedItem={selectedItem} />
           </TabPanel>
           <TabPanel style={tabStyle} value={value} index={1}>
             2{" "}
@@ -70,7 +79,7 @@ const Home = () => {
       </Grid>
       <Grid item style={{}} xs={4} sm={4} md={6}>
         <div style={subComponentStyle}>
-          <Model parentNode={"tab-box"} />
+          <Model getClickResult={getClickResult} parentNode={"tab-box"} />
         </div>
       </Grid>
     </Grid>
