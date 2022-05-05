@@ -7,7 +7,7 @@ import { getAuthentication } from './components/login/functions';
 import { useEffect, useState } from 'react';
 import { propagate, sessionTrigger as t } from './atoms';
 import conf from "./util/config"
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { RecoilRoot, useRecoilState, useRecoilValue } from 'recoil'
 import Dashboard from './util/Dashboard'
 import Home from "./pages/Home";
 import {
@@ -59,6 +59,7 @@ function App() {
 
 
   return (
+    
     <div id={update}>
       <StoreContext.Provider value={new Store()}>
         <Header pages={pages} />
@@ -72,6 +73,7 @@ function App() {
       <Child/> */}
       </StoreContext.Provider>
     </div>
+    
   );
 }
 

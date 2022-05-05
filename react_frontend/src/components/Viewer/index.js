@@ -3,8 +3,9 @@ import Viewer from "./Viewer";
 import { AGGREGATOR_ENDPOINT } from '../../constants';
 import { extract, createReferences } from '../../util/functions';
 import { DCAT, DCTERMS, LDP, RDFS } from '@inrupt/vocab-common-rdf'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { project as p, datasets as d, selectedElements as s} from "../../atoms"
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { project as p, datasets as d, selectedElements as s, clickedInst as c} from "../../atoms"
+import StructuralTimberForm from "../Forms/FormStructuralTimber";
 
 
 const LBDviewer = ({ parentNode }) => {
@@ -12,7 +13,7 @@ const LBDviewer = ({ parentNode }) => {
   const [dataset, setDataset] = useState("")
   const [selectedElements, setSelectedElements] = useRecoilState(s)
   const [selection, setSelection] = useState([])
-  const [results, setResults] = useState([])
+  const [setClickedInst] = useSetRecoilState(c)
   const project = useRecoilValue(p)
   const datasets = useRecoilValue(d)
 
@@ -54,18 +55,7 @@ const LBDviewer = ({ parentNode }) => {
     setSelection(prev => filtered)
   }, [selectedElements])
 
-  function SelectFormComponent() {
-    let MyComponent
-    switch (results.type) {
-      case "Window":
-        MyComponent = MyWindowForm
-        break;
-    
-      default:
-        break;
-    }
-    return MyComponent
-  }
+
 
 
   async function onSelect(sel) {
@@ -85,7 +75,7 @@ const LBDviewer = ({ parentNode }) => {
         `
         console.log('query', query)
         const results = await project.directQuery(query, [ref.distribution])
-        setResults(results)
+        setClickedInst(results)
         console.log(results)
 
         //check ?type of results and choose Form Component based on this type

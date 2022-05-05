@@ -30,8 +30,13 @@ const datasets = atom({
 
 const selectedElements = atom({
   key: "selectedElements",
-  default: []
-})
+  default: [],
+});
+
+const clickedInst = atom({
+  key: "clickedInst",
+  default: [],
+});
   
 // const session = atom({
 //   key: "session",
@@ -39,4 +44,4 @@ const selectedElements = atom({
 // })
 
 
-export {sessionTrigger, loadedParcels, project, propagate, datasets, selectedElements}
+export {sessionTrigger, loadedParcels, project, propagate, datasets, selectedElements, clickedInst}

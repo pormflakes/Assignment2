@@ -4,6 +4,8 @@ import Model from "./model.js";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+import SelectFormComponent from "../../components/SelectFormComponent.js";
+
 
 
 function TabPanel(props) {
@@ -37,6 +39,8 @@ const Home = () => {
     setValue(newValue);
   };
 
+  
+
   return (
     <Grid
       style={{ textAlign: "justify" }}
@@ -52,19 +56,19 @@ const Home = () => {
               onChange={handleChange}
               aria-label="basic tabs example"
             >
-              <Tab label="tabje 1" {...a11yProps(0)} />
-              <Tab label="tabje 2" {...a11yProps(1)} />
+              <Tab label="Material properties" {...a11yProps(0)} />
+              <Tab label="Documentation" {...a11yProps(1)} />
               <Tab label="tabje 3" {...a11yProps(2)} />
             </Tabs>
           </Box>
           <TabPanel id="tab-box" style={tabStyle} value={value} index={0}>
-            1{" "}
+            <SelectFormComponent/>
           </TabPanel>
           <TabPanel style={tabStyle} value={value} index={1}>
             2{" "}
           </TabPanel>
           <TabPanel style={tabStyle} value={value} index={2}>
-            3
+            3{" "}
           </TabPanel>
         </Box>
       </Grid>
