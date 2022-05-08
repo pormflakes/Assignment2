@@ -40,8 +40,9 @@ const Home = () => {
   };
 
   function getClickResult(result) {
-    if(result.results.bindings[1].value.value){
-      console.log(result.results.bindings[1].value.value)
+    console.log(result.results.bindings)
+    if(result.results.bindings.length > 0){
+      console.log(result.results.bindings)
       setSelectedItem(result.results.bindings[1].value.value)
     }
   }

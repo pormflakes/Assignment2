@@ -94,6 +94,14 @@ const LBDviewer = (props, { parentNode }) => {
              .
         }
         `;
+
+        // const query = `
+        // PREFIX props: <https://w3id.org/props#>
+        // Select ?material where {
+        //     <${ref.identifier}> props:nameIfcRoot_attribute_simple ?material
+        //        .
+        //   }
+        //   `;
         console.log("query", query);
         const results = await project.directQuery(query, [ref.distribution]);
         setResults(results);
