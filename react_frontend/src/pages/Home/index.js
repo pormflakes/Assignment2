@@ -39,12 +39,15 @@ const Home = () => {
     setValue(newValue);
   };
 
-  function getClickResult(result) {
-    console.log(result.results.bindings)
-    if(result.results.bindings.length > 0){
-      console.log(result.results.bindings)
-      setSelectedItem(result.results.bindings[1].value.value)
+  function getClickResult(results) {
+    if (results.length > 0) {
+      console.log(results[0], 'in click result')
     }
+    
+    // if(result.results.bindings.length > 0){
+    //   console.log(result.results.bindings)
+    //   setSelectedItem(result.results.bindings[1].value.value)
+    // }
   }
 
   return (

@@ -10,12 +10,14 @@ import {
   selectedElements as s,
 } from "../../atoms";
 import { useThemeProps } from "@mui/system";
+import {QueryEngine} from '@comunica/query-sparql'
 
 const LBDviewer = (props, { parentNode }) => {
   const [model, setModel] = useState("");
   const [dataset, setDataset] = useState("");
   const [selectedElements, setSelectedElements] = useRecoilState(s);
   const [selection, setSelection] = useState([]);
+  const queryEngine = new QueryEngine()
   const [results, setResults] = useState([]);
   const project = useRecoilValue(p);
   const datasets = useRecoilValue(d);
@@ -89,21 +91,25 @@ const LBDviewer = (props, { parentNode }) => {
         return item.identifier.startsWith("http");
       });
       for (const ref of graphReferences) {
-        const query = `Select Distinct * where {
-          <${ref.identifier}> a ?value ;
-             .
-        }
-        `;
+        // const query = `Select Distinct * where {
+        //   <${ref.identifier}> a ?value ;
+        //      .
+        // }
+        // `;
 
-        // const query = `
-        // PREFIX props: <https://w3id.org/props#>
-        // Select ?material where {
-        //     <${ref.identifier}> props:nameIfcRoot_attribute_simple ?material
-        //        .
-        //   }
-        //   `;
+        const query = `
+        prefix schema: <http://schema.org/> 
+        PREFIX props: <https://w3id.org/props#>
+        Select ?material where {
+            <${ref.identifier}> props:objectTypeIfcObject ?i .
+            ?i schema:value ?material .
+          }
+          `;
         console.log("query", query);
-        const results = await project.directQuery(query, [ref.distribution]);
+        const results = await queryEngine.queryBindings(query, {sources: [ref.distribution]})
+          .then(i => i.toArray())
+          .then(i => i.map(item =>item.get('material').value))
+
         setResults(results);
         props.getClickResult(results);
         //check ?type of results and choose Form Component based on this type
