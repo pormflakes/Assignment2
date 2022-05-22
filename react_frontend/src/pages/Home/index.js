@@ -56,7 +56,7 @@ const Home = () => {
         setSelectedText("You chose a ceramic tile");
         setSelectedPdf("http://localhost:5000/lbd/voorpost/local/pdfs/keramisch.pdf");
       } else {
-        setSelectedText("You chose something we cannot recycle");
+        setSelectedText("You chose something we cannot reuse");
         setSelectedPdf();
       }
     }
