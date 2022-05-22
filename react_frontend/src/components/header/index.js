@@ -57,7 +57,6 @@ const ResponsiveAppBar = ({pages}) => {
           <Typography
             variant="h6"
             noWrap
-            component="div"
             component={Link}
             to={"/"}
             sx={{ mr: 2, display: { xs: 'none', md: 'block' }, color: "white" }}
@@ -105,7 +104,6 @@ const ResponsiveAppBar = ({pages}) => {
           <Typography
             variant="h6"
             noWrap
-            component="div"
             component={Link}
             to={"/"}
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}

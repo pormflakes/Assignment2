@@ -5,6 +5,11 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import SelectedItemHolder from "../../components/SelectedItemHolder/index.js";
+import GetProjects from '../Documentation/Dialogs/GetProjects'
+import CreateProject from '../Documentation/Dialogs/CreateProject'
+import CreateDataset from '../Documentation/Dialogs/CreateDataset'
+import GetAllDatasets from '../Documentation/Dialogs/GetAllDatasets'
+import AlignDistributions from '../Documentation/Dialogs/AlignDistributions'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -22,7 +27,6 @@ function TabPanel(props) {
   );
 }
 
-
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
@@ -32,8 +36,31 @@ function a11yProps(index) {
 
 const Home = () => {
   const [value, setValue] = React.useState(0);
-  const [selectedItem, setSelectedItem] = React.useState();
+  const [selectedText, setSelectedText] = React.useState();
+  const [selectedPdf, setSelectedPdf] = React.useState();
   const tabStyle = { height: 800 };
+
+  const setSelectedItemProps = (results) => {
+    if (results != undefined) {
+      results = results.toLowerCase()
+      if (results.includes("alu")) {
+        setSelectedText("You chose a metal cladding");
+        setSelectedPdf("http://localhost:5000/lbd/voorpost/local/pdfs/metal.pdf");
+      } else if (results.includes("concrete") || results.includes("wall")) {
+        setSelectedText("You chose a concrete shear wall");
+        setSelectedPdf("http://localhost:5000/lbd/voorpost/local/pdfs/concrete.pdf");
+      } else if (results.includes("door") || results.includes("flush")) {
+        setSelectedText("You chose a door");
+        setSelectedPdf("http://localhost:5000/lbd/voorpost/local/pdfs/door.pdf");
+      } else if (results.includes("floor") || results.includes("omgeving plaat")) {
+        setSelectedText("You chose a ceramic tile");
+        setSelectedPdf("http://localhost:5000/lbd/voorpost/local/pdfs/keramisch.pdf");
+      } else {
+        setSelectedText("You chose something we cannot recycle");
+        setSelectedPdf();
+      }
+    }
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -41,13 +68,9 @@ const Home = () => {
 
   function getClickResult(results) {
     if (results.length > 0) {
-      console.log(results[0], 'in click result')
+      console.log(results[0]);
+      setSelectedItemProps(results[0])
     }
-    
-    // if(result.results.bindings.length > 0){
-    //   console.log(result.results.bindings)
-    //   setSelectedItem(result.results.bindings[1].value.value)
-    // }
   }
 
   return (
@@ -65,19 +88,36 @@ const Home = () => {
               onChange={handleChange}
               aria-label="basic tabs example"
             >
-              <Tab label="tabje 1" {...a11yProps(0)} />
-              <Tab label="tabje 2" {...a11yProps(1)} />
-              <Tab label="tabje 3" {...a11yProps(2)} />
+              <Tab label="Materiaal" {...a11yProps(0)} />
+              <Tab label="3D model" {...a11yProps(1)} />
             </Tabs>
           </Box>
           <TabPanel id="tab-box" style={tabStyle} value={value} index={0}>
-          <SelectedItemHolder selectedItem={selectedItem} />
+            <SelectedItemHolder
+              selectedText={selectedText}
+              selectedPdf={selectedPdf}
+            />
           </TabPanel>
           <TabPanel style={tabStyle} value={value} index={1}>
-            2{" "}
-          </TabPanel>
-          <TabPanel style={tabStyle} value={value} index={2}>
-            3
+          {/* <Grid style={{ textAlign: "justify" }} container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}> */}
+            <Grid item >
+                <div style={subComponentStyle}>
+                    <CreateProject title={"1. (optional) create a project (login required)"} />
+                </div>
+                <div style={subComponentStyle}>
+                    <GetProjects style={subComponentStyle} title={"2. Get available projects for this aggregator"} />
+                </div>
+                <div style={subComponentStyle}>
+                    <CreateDataset style={subComponentStyle} title={"3. Upload Datasets to this project"} />
+                </div>
+                <div style={subComponentStyle}>
+                    <GetAllDatasets style={subComponentStyle} title={"4. Activate Datasets of this project"} />
+                </div>
+                <div style={subComponentStyle}>
+                    <AlignDistributions style={subComponentStyle} title={"5. Align datasets and create abstract concepts"} />
+                </div>
+            </Grid>
+        {/* </Grid> */}
           </TabPanel>
         </Box>
       </Grid>
@@ -98,7 +138,6 @@ const subComponentStyle = {
 };
 
 export default Home;
-
 
 //comment date: 05/06/2020
 //comment Louis
