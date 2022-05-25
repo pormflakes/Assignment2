@@ -45,16 +45,16 @@ const Home = () => {
       results = results.toLowerCase()
       if (results.includes("alu")) {
         setSelectedText("You chose a metal cladding");
-        setSelectedPdf("http://localhost:5000/lbd/voorpost/local/pdfs/metal.pdf");
+        setSelectedPdf("http://localhost:5000/Louis-De-Vos/lbd/voorpost/pdfs/metal.pdf");
       } else if (results.includes("concrete") || results.includes("wall")) {
         setSelectedText("You chose a concrete shear wall");
-        setSelectedPdf("http://localhost:5000/lbd/voorpost/local/pdfs/concrete.pdf");
+        setSelectedPdf("http://localhost:5000/Louis-De-Vos/lbd/voorpost/pdfs/concrete.pdf");
       } else if (results.includes("door") || results.includes("flush")) {
         setSelectedText("You chose a door");
-        setSelectedPdf("http://localhost:5000/lbd/voorpost/local/pdfs/door.pdf");
+        setSelectedPdf("http://localhost:5000/Louis-De-Vos/lbd/voorpost/pdfs/door.pdf");
       } else if (results.includes("floor") || results.includes("omgeving plaat")) {
         setSelectedText("You chose a ceramic tile");
-        setSelectedPdf("http://localhost:5000/lbd/voorpost/local/pdfs/keramisch.pdf");
+        setSelectedPdf("http://localhost:5000/Louis-De-Vos/lbd/voorpost/pdfs/keramisch.pdf");
       } else {
         setSelectedText("You chose something we cannot reuse");
         setSelectedPdf();

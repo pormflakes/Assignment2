@@ -42,23 +42,25 @@ const selectedItemHolder = (props) => {
                   Download PDF
                 </Button>
               </div>
+              
+              {pageNumber > 1 && (
+                <Button className={classes.test} onClick={changePageBack}>Previous Page</Button>
+              )}
+              {pageNumber < numPages && (
+                <Button className={classes.test} onClick={changePageNext}>Next Page</Button>
+              )}
               <Document
                 id="viewer"
                 file={props.selectedPdf}
                 onLoadSuccess={onDocumentLoadSuccess}
               >
-                <Page id="page" pageNumber={pageNumber} />
+                <Page height="650" id="page" pageNumber={pageNumber} />
               </Document>
-              <p>
+              
+              <p className={classes.small}>
                 Page {pageNumber} of {numPages}
               </p>
-
-              {pageNumber > 1 && (
-                <Button onClick={changePageBack}>Previous Page</Button>
-              )}
-              {pageNumber < numPages && (
-                <Button onClick={changePageNext}>Next Page</Button>
-              )}
+              
             </>
           )}
         </>
