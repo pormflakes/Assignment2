@@ -88,8 +88,8 @@ const Home = () => {
               onChange={handleChange}
               aria-label="basic tabs example"
             >
-              <Tab label="Materiaal" {...a11yProps(0)} />
-              <Tab label="3D model" {...a11yProps(1)} />
+              <Tab label="Material" {...a11yProps(0)} />
+              <Tab label="Upload 3D model" {...a11yProps(1)} />
             </Tabs>
           </Box>
           <TabPanel id="tab-box" style={tabStyle} value={value} index={0}>
@@ -139,5 +139,3 @@ const subComponentStyle = {
 
 export default Home;
 
-//comment date: 05/06/2020
-//comment Louis
